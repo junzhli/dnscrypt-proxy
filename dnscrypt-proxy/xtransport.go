@@ -533,7 +533,7 @@ func (xTransport *XTransport) Fetch(
 		dlog.Debugf("Has domain [%s] in hardcoded supported hosts", host)
 		hasAltSupport = true
 		xTransport.altSupport.Lock()
-		xTransport.altSupport.cache[url.Host] = uint16(port)
+		xTransport.altSupport.cache[url.Host] = xTransport.http3SupportedHosts[host]
 		dlog.Debugf("Caching altPort for [%v]", url.Host)
 		xTransport.altSupport.Unlock()
 	}
