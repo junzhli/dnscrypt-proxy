@@ -548,7 +548,7 @@ func (xTransport *XTransport) Fetch(
 		if hasAltSupport || (ok && probeSuccess) {
 			if int(altPort) == port {
 				client.Transport = xTransport.h3Transport
-				dlog.Debugf("Using HTTP/3 transport for [%s]", url.Host)
+				dlog.Noticef("Using HTTP/3 transport for [%s]", url.Host)
 			}
 		}
 	}
@@ -625,7 +625,7 @@ func (xTransport *XTransport) Fetch(
 		_, ok := xTransport.http3ProbeSuccessfulHosts.cache[host]
 		xTransport.http3ProbeSuccessfulHosts.RUnlock()
 		if !ok {
-			dlog.Infof("Probe using HTTP/3 for [%s]", url.Host)
+			dlog.Noticef("Probe using HTTP/3 for [%s]", url.Host)
 			http3TestClient := http.Client{
 				Transport: xTransport.h3Transport,
 				Timeout:   timeout,
@@ -633,7 +633,7 @@ func (xTransport *XTransport) Fetch(
 
 			success := true
 			if _, err := http3TestClient.Do(req); err != nil {
-				dlog.Infof("Probe using HTTP/3 failed for [%s]", url.Host)
+				dlog.Noticef("Probe using HTTP/3 failed for [%s]", url.Host)
 				success = false
 			}
 			xTransport.http3ProbeSuccessfulHosts.Lock()
